@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        // for use with laravel scheduler (php artisan schedule:run)
+        $schedule->command('pullStaff')->daily();  
     }
 
     /**

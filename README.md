@@ -1,21 +1,27 @@
 
-# Welcome to RXMG Practical Code Test
+# RXMG Practical Code Test Solution
 
-Hi!  Congratulations for making it this far!  During this test, you are allowed to use any resources you may find helpful in order to accomplish the task.  You are free to approach the problem in whatever manner you decide.
-# Files
-
-Provided is a clean install of Laravel.  You are given 24 hours to finish the assignment.  You are allowed to install and utilize any package you feel will help you get the job done.
+Code has been added to address the problem identified below.  Thought process is provided below the problem statement in the `Solution` section. Do also review the `Notes` section.
 
 # Problem to Solve
 
-The purpose of this test is to gauge your skills in the day-to-day problems we come across here at RXMG.  For example, we deal with a fair amount of ETL (extract, transform, load) processes so it's only natural for us to give you a basic ETL task.  To start, we will need to get the results from an API every 24 hours.  We will then need to save that data to a file and process it into our database.  Once that's complete, we will also need the ability retrieve those results using an API endpoint.  P.S: Dont forget to test the code :wink:
+We needed to get the results from an external API every 24 hours.  That data was to be saved to a file and added into our database. An local API endpoint was also needed to be able to pull the data from our database.
 
-## Resources
-[API URL](https://61f07509732d93001778ea7d.mockapi.io/api/v1/user/users?page=1&limit=10)
+# Solution
 
-Please use this link to fetch all users.  The list is paginated.  There is a max of 10 pages.  This number can be changed by altering the limit query parameter.
+- Updated .env to hold MySQL info, added .env to .gitignore for security
+- Added migration to hold data from API
+- Added artisan command `PullStaff` for either cron or Laravel Scheduler to pull data from API and save to DB/CSV.  
+- Added unsecured API endpoint to output JSON of all staff (Can be accessed via /api/staff)
 
-## Logic Flow
-[Flow Diagram](https://drive.google.com/file/d/1_b8rsSqhyo7GNfYWk3YWBrSThFBorwnz/view?usp=sharing)
 
+## Notes
+Reference was made in original README.MD to those in the external API as "users", so it was unclear whether to create users with their info. External API did not have email, username, password, etc.  So an educated assumption was made that they were not literal users.  Code was written accordingly. 
 
+Original instructions said to:
+1. Put data into CSV
+2. Put data into database
+
+In that specific order, although nothing was explicitly said that said it had to be in that order.
+
+I figured if the external endpoint updated any of their data but retained the same data for the id's, it'd be easier to just sync our database to their data and then select from our database and dump to CSV.
